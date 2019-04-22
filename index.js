@@ -44,8 +44,28 @@ server.delete('/api/users/:id', (req, res) => {
     .catch(error => res.status(500).json({error: "The user infromation could not be retrieved."}));
 });
 
+server.put('/api/users/:id', (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+  if (body && body.name && body.bio) {
+    db.findById(id)
+      .then(user => user
+            ? db.update(id, body)
+            .then(success => success
+                  ? db.findById(id)
+                  .then(newUser => res.status(200).json(newUser))
+                  .catch(error => res.status(500).json({error: "User information update, but user information could not be retrieved"}))
+                  : (void 0).throwError())
+            .catch(error => res.status(500).json({error: "The user information could not be modified."}))
+            : res.status(404).json({error: "The user with the specified ID does not exist."}))
+      .catch(error => console.log(error) || res.status(500).json({error: "The user infromation could not be retrieved."}));
+  } else {
+    res.status(400).json({errorMessage: "Please provide name and bio for the user."});
+  }
+});
+
 
 server.listen(5000, () => {
-    console.log('sever running on port 5000');
+  console.log('sever running on port 5000');
 });
 
