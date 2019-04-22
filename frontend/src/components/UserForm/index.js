@@ -1,17 +1,23 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 
-const UserForm = ({onSubmit, values, buttonText, ...props}) => {
+const UserForm = ({onSubmit, onChange, values, buttonText, ...props}) => {
   return (
     <div className="user-form">
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <label>Name</label>
-          <input palceholder="name" value={values.name || ""}/>
+          <input name="name"
+                 palceholder="name"
+                 onChange={onChange}
+                 value={values.name || ""}/>
         </Form.Field>
         <Form.Field>
           <label>Bio</label>
-          <input palceholder="bio" value={values.name || ""}/>
+          <input name="bio"
+                 palceholder="bio"
+                 onChange={onChange}
+                 value={values.bio || ""}/>
         </Form.Field>
         <Button type="submit">{buttonText || "Submit"}</Button>
       </Form>

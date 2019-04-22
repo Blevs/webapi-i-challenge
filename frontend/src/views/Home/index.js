@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'semantic-ui-react';
 import * as api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
@@ -9,7 +10,7 @@ const Home = (props) => {
     api.getUsers()
       .then(res => setUsers(res.data))
       .catch(error => setError(Error));
-  }, []);
+  }, [props.history]);
   return (
     <div className="home">
       Home
@@ -17,7 +18,7 @@ const Home = (props) => {
         {users.map(user => (
           <Card key={user.id}>
             <Card.Meta style={{display: "flex", justifyContent: "space-between", padding: "0 10px"}}>
-              <span className="edit">edit</span>
+              <Link className="edit" to={`/edit/${user.id}`}>edit</Link>
               <span className="delete">delete</span>
             </Card.Meta>
             <Card.Content>
