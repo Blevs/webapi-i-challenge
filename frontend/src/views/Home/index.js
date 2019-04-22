@@ -20,7 +20,7 @@ const Home = (props) => {
   };
   return (
     <div className="home">
-      Home
+      Home <Link to="/add" to="/add">Add</Link>
       {error && <div>{error}</div>}
       <Card.Group>
         {users.map(user => (
