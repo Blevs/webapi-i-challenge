@@ -60,7 +60,7 @@ server.put('/api/users/:id', (req, res) => {
             : res.status(404).json({error: "The user with the specified ID does not exist."}))
       .catch(error => console.log(error) || res.status(500).json({error: "The user infromation could not be retrieved."}));
   } else {
-    res.status(400).json({errorMessage: "Please provide name and bio for the user."});
+    res.status(400).json({error: "Please provide name and bio for the user."});
   }
 });
 
