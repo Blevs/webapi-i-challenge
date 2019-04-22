@@ -33,6 +33,17 @@ server.get('/api/users/:id', (req, res) => {
     .catch(error => res.status(500).json({error: "The user information could not be retrieved."}));
 });
 
+server.delete('/api/users/:id', (req, res) => {
+  const id = req.params.id;
+  db.findById(id)
+    .then(user => user
+          ? db.remove(id)
+          .then(del => del ? res.status(200).json(user) : (void 0).throwError())
+          .catch(error => res.status(500).json({error: "The user could not be removed"}))
+          : res.status(404).json({error: "The user with the specified ID does not exist."}))
+    .catch(error => res.status(500).json({error: "The user infromation could not be retrieved."}));
+});
+
 
 server.listen(5000, () => {
     console.log('sever running on port 5000');
